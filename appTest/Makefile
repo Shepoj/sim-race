@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest
+CMAKE_SOURCE_DIR = /home/austin/Documents/POO/projet/support/RoyerOK/appTest
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest
+CMAKE_BINARY_DIR = /home/austin/Documents/POO/projet/support/RoyerOK/appTest
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest/CMakeFiles /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles /home/austin/Documents/POO/projet/support/RoyerOK/appTest//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -174,6 +174,102 @@ apptest/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/build
 .PHONY : apptest/fast
 
+src/Boat.o: src/Boat.cpp.o
+.PHONY : src/Boat.o
+
+# target to build an object file
+src/Boat.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Boat.cpp.o
+.PHONY : src/Boat.cpp.o
+
+src/Boat.i: src/Boat.cpp.i
+.PHONY : src/Boat.i
+
+# target to preprocess a source file
+src/Boat.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Boat.cpp.i
+.PHONY : src/Boat.cpp.i
+
+src/Boat.s: src/Boat.cpp.s
+.PHONY : src/Boat.s
+
+# target to generate assembly for a file
+src/Boat.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Boat.cpp.s
+.PHONY : src/Boat.cpp.s
+
+src/Game.o: src/Game.cpp.o
+.PHONY : src/Game.o
+
+# target to build an object file
+src/Game.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Game.cpp.o
+.PHONY : src/Game.cpp.o
+
+src/Game.i: src/Game.cpp.i
+.PHONY : src/Game.i
+
+# target to preprocess a source file
+src/Game.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Game.cpp.i
+.PHONY : src/Game.cpp.i
+
+src/Game.s: src/Game.cpp.s
+.PHONY : src/Game.s
+
+# target to generate assembly for a file
+src/Game.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Game.cpp.s
+.PHONY : src/Game.cpp.s
+
+src/Menu.o: src/Menu.cpp.o
+.PHONY : src/Menu.o
+
+# target to build an object file
+src/Menu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Menu.cpp.o
+.PHONY : src/Menu.cpp.o
+
+src/Menu.i: src/Menu.cpp.i
+.PHONY : src/Menu.i
+
+# target to preprocess a source file
+src/Menu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Menu.cpp.i
+.PHONY : src/Menu.cpp.i
+
+src/Menu.s: src/Menu.cpp.s
+.PHONY : src/Menu.s
+
+# target to generate assembly for a file
+src/Menu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Menu.cpp.s
+.PHONY : src/Menu.cpp.s
+
+src/Obstacle.o: src/Obstacle.cpp.o
+.PHONY : src/Obstacle.o
+
+# target to build an object file
+src/Obstacle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Obstacle.cpp.o
+.PHONY : src/Obstacle.cpp.o
+
+src/Obstacle.i: src/Obstacle.cpp.i
+.PHONY : src/Obstacle.i
+
+# target to preprocess a source file
+src/Obstacle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Obstacle.cpp.i
+.PHONY : src/Obstacle.cpp.i
+
+src/Obstacle.s: src/Obstacle.cpp.s
+.PHONY : src/Obstacle.s
+
+# target to generate assembly for a file
+src/Obstacle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Obstacle.cpp.s
+.PHONY : src/Obstacle.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -211,6 +307,18 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... apptest"
+	@echo "... src/Boat.o"
+	@echo "... src/Boat.i"
+	@echo "... src/Boat.s"
+	@echo "... src/Game.o"
+	@echo "... src/Game.i"
+	@echo "... src/Game.s"
+	@echo "... src/Menu.o"
+	@echo "... src/Menu.i"
+	@echo "... src/Menu.s"
+	@echo "... src/Obstacle.o"
+	@echo "... src/Obstacle.i"
+	@echo "... src/Obstacle.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

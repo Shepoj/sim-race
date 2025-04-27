@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest
+CMAKE_SOURCE_DIR = /home/austin/Documents/POO/projet/support/RoyerOK/appTest
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest
+CMAKE_BINARY_DIR = /home/austin/Documents/POO/projet/support/RoyerOK/appTest
 
 # Include any dependencies generated for this target.
 include CMakeFiles/apptest.dir/depend.make
@@ -72,32 +72,97 @@ include CMakeFiles/apptest.dir/flags.make
 CMakeFiles/apptest.dir/src/main.cpp.o: CMakeFiles/apptest.dir/flags.make
 CMakeFiles/apptest.dir/src/main.cpp.o: src/main.cpp
 CMakeFiles/apptest.dir/src/main.cpp.o: CMakeFiles/apptest.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/apptest.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/apptest.dir/src/main.cpp.o -MF CMakeFiles/apptest.dir/src/main.cpp.o.d -o CMakeFiles/apptest.dir/src/main.cpp.o -c /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/apptest.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/apptest.dir/src/main.cpp.o -MF CMakeFiles/apptest.dir/src/main.cpp.o.d -o CMakeFiles/apptest.dir/src/main.cpp.o -c /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/main.cpp
 
 CMakeFiles/apptest.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/apptest.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest/src/main.cpp > CMakeFiles/apptest.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/main.cpp > CMakeFiles/apptest.dir/src/main.cpp.i
 
 CMakeFiles/apptest.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/apptest.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest/src/main.cpp -o CMakeFiles/apptest.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/main.cpp -o CMakeFiles/apptest.dir/src/main.cpp.s
+
+CMakeFiles/apptest.dir/src/Game.cpp.o: CMakeFiles/apptest.dir/flags.make
+CMakeFiles/apptest.dir/src/Game.cpp.o: src/Game.cpp
+CMakeFiles/apptest.dir/src/Game.cpp.o: CMakeFiles/apptest.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/apptest.dir/src/Game.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/apptest.dir/src/Game.cpp.o -MF CMakeFiles/apptest.dir/src/Game.cpp.o.d -o CMakeFiles/apptest.dir/src/Game.cpp.o -c /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Game.cpp
+
+CMakeFiles/apptest.dir/src/Game.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/apptest.dir/src/Game.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Game.cpp > CMakeFiles/apptest.dir/src/Game.cpp.i
+
+CMakeFiles/apptest.dir/src/Game.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/apptest.dir/src/Game.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Game.cpp -o CMakeFiles/apptest.dir/src/Game.cpp.s
+
+CMakeFiles/apptest.dir/src/Boat.cpp.o: CMakeFiles/apptest.dir/flags.make
+CMakeFiles/apptest.dir/src/Boat.cpp.o: src/Boat.cpp
+CMakeFiles/apptest.dir/src/Boat.cpp.o: CMakeFiles/apptest.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/apptest.dir/src/Boat.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/apptest.dir/src/Boat.cpp.o -MF CMakeFiles/apptest.dir/src/Boat.cpp.o.d -o CMakeFiles/apptest.dir/src/Boat.cpp.o -c /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Boat.cpp
+
+CMakeFiles/apptest.dir/src/Boat.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/apptest.dir/src/Boat.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Boat.cpp > CMakeFiles/apptest.dir/src/Boat.cpp.i
+
+CMakeFiles/apptest.dir/src/Boat.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/apptest.dir/src/Boat.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Boat.cpp -o CMakeFiles/apptest.dir/src/Boat.cpp.s
+
+CMakeFiles/apptest.dir/src/Menu.cpp.o: CMakeFiles/apptest.dir/flags.make
+CMakeFiles/apptest.dir/src/Menu.cpp.o: src/Menu.cpp
+CMakeFiles/apptest.dir/src/Menu.cpp.o: CMakeFiles/apptest.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/apptest.dir/src/Menu.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/apptest.dir/src/Menu.cpp.o -MF CMakeFiles/apptest.dir/src/Menu.cpp.o.d -o CMakeFiles/apptest.dir/src/Menu.cpp.o -c /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Menu.cpp
+
+CMakeFiles/apptest.dir/src/Menu.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/apptest.dir/src/Menu.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Menu.cpp > CMakeFiles/apptest.dir/src/Menu.cpp.i
+
+CMakeFiles/apptest.dir/src/Menu.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/apptest.dir/src/Menu.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Menu.cpp -o CMakeFiles/apptest.dir/src/Menu.cpp.s
+
+CMakeFiles/apptest.dir/src/Obstacle.cpp.o: CMakeFiles/apptest.dir/flags.make
+CMakeFiles/apptest.dir/src/Obstacle.cpp.o: src/Obstacle.cpp
+CMakeFiles/apptest.dir/src/Obstacle.cpp.o: CMakeFiles/apptest.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/apptest.dir/src/Obstacle.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/apptest.dir/src/Obstacle.cpp.o -MF CMakeFiles/apptest.dir/src/Obstacle.cpp.o.d -o CMakeFiles/apptest.dir/src/Obstacle.cpp.o -c /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Obstacle.cpp
+
+CMakeFiles/apptest.dir/src/Obstacle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/apptest.dir/src/Obstacle.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Obstacle.cpp > CMakeFiles/apptest.dir/src/Obstacle.cpp.i
+
+CMakeFiles/apptest.dir/src/Obstacle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/apptest.dir/src/Obstacle.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/austin/Documents/POO/projet/support/RoyerOK/appTest/src/Obstacle.cpp -o CMakeFiles/apptest.dir/src/Obstacle.cpp.s
 
 # Object files for target apptest
 apptest_OBJECTS = \
-"CMakeFiles/apptest.dir/src/main.cpp.o"
+"CMakeFiles/apptest.dir/src/main.cpp.o" \
+"CMakeFiles/apptest.dir/src/Game.cpp.o" \
+"CMakeFiles/apptest.dir/src/Boat.cpp.o" \
+"CMakeFiles/apptest.dir/src/Menu.cpp.o" \
+"CMakeFiles/apptest.dir/src/Obstacle.cpp.o"
 
 # External object files for target apptest
 apptest_EXTERNAL_OBJECTS =
 
 apptest: CMakeFiles/apptest.dir/src/main.cpp.o
+apptest: CMakeFiles/apptest.dir/src/Game.cpp.o
+apptest: CMakeFiles/apptest.dir/src/Boat.cpp.o
+apptest: CMakeFiles/apptest.dir/src/Menu.cpp.o
+apptest: CMakeFiles/apptest.dir/src/Obstacle.cpp.o
 apptest: CMakeFiles/apptest.dir/build.make
-apptest: /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/SFML/install/lib/libsfml-graphics-d.so.2.6.1
-apptest: /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/libphysics/Debug/liblibphysicsd.so
-apptest: /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/SFML/install/lib/libsfml-window-d.so.2.6.1
-apptest: /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/SFML/install/lib/libsfml-system-d.so.2.6.1
+apptest: /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1
+apptest: /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1
+apptest: /usr/lib/x86_64-linux-gnu/libsfml-network.so.2.6.1
+apptest: /home/austin/Documents/POO/projet/support/RoyerOK/libphysics/Debug/liblibphysicsd.so
+apptest: /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
 apptest: CMakeFiles/apptest.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable apptest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable apptest"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/apptest.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -109,6 +174,6 @@ CMakeFiles/apptest.dir/clean:
 .PHONY : CMakeFiles/apptest.dir/clean
 
 CMakeFiles/apptest.dir/depend:
-	cd /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest /etudiants/jregnault542/Téléchargements/RoyerOK_07_04_2025/RoyerOK/appTest/CMakeFiles/apptest.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/austin/Documents/POO/projet/support/RoyerOK/appTest && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/austin/Documents/POO/projet/support/RoyerOK/appTest /home/austin/Documents/POO/projet/support/RoyerOK/appTest /home/austin/Documents/POO/projet/support/RoyerOK/appTest /home/austin/Documents/POO/projet/support/RoyerOK/appTest /home/austin/Documents/POO/projet/support/RoyerOK/appTest/CMakeFiles/apptest.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/apptest.dir/depend
 

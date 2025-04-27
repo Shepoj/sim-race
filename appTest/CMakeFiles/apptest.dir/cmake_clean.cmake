@@ -1,4 +1,12 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/apptest.dir/src/Boat.cpp.o"
+  "CMakeFiles/apptest.dir/src/Boat.cpp.o.d"
+  "CMakeFiles/apptest.dir/src/Game.cpp.o"
+  "CMakeFiles/apptest.dir/src/Game.cpp.o.d"
+  "CMakeFiles/apptest.dir/src/Menu.cpp.o"
+  "CMakeFiles/apptest.dir/src/Menu.cpp.o.d"
+  "CMakeFiles/apptest.dir/src/Obstacle.cpp.o"
+  "CMakeFiles/apptest.dir/src/Obstacle.cpp.o.d"
   "CMakeFiles/apptest.dir/src/main.cpp.o"
   "CMakeFiles/apptest.dir/src/main.cpp.o.d"
   "apptest"
