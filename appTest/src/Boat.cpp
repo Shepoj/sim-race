@@ -6,6 +6,55 @@ Boat::Boat(sim::physics::PhysicsEngine& engine, sim::physics::DynamicModel& mode
     mBody = engine.createGenericBoat();
 }
 
+void Boat::updateTrail(float dt) {
+    // Ajouter un nouveau cercle à l'arrière
+    if (mBody->getState().velocity_body.x != 0 || mBody->getState().velocity_body.y != 0) {
+        Trail newTrail;
+        newTrail.shape.setRadius(2.f); // petite bulle au début
+        newTrail.shape.setOrigin(2.f, 2.f);
+        newTrail.shape.setFillColor(sf::Color(255, 255, 255, 100)); // blanc semi-transparent
+        auto& pos = mBody->getState().position;
+        float yaw = mBody->getState().yaw;
+
+        sf::Vector2f decalage;
+        decalage.x = -std::cos(yaw) * 30.f;
+        decalage.y = -std::sin(yaw) * 30.f;
+
+        newTrail.shape.setPosition(pos.x + decalage.x, pos.y + decalage.y);
+
+        newTrail.lifetime = 0.3f;     // Durée actuelle
+        newTrail.maxLifetime = 0.3f;  // Durée totale au départ
+        mTrail.push_back(newTrail);
+
+    }
+
+    // Faire vieillir les sillages
+    for (auto it = mTrail.begin(); it != mTrail.end(); ) {
+    it->lifetime -= dt;
+    if (it->lifetime <= 0.f) {
+        it = mTrail.erase(it);
+    } else {
+        // Calculer combien de temps il reste (0.0 -> 1.0)
+        float ratio = it->lifetime / it->maxLifetime;
+
+        // Faire GROSSIR progressivement le cercle
+        float newRadius = 2.f + (1.f - ratio) * 5.f; // grossit de 2px à 7px
+        it->shape.setRadius(newRadius);
+        it->shape.setOrigin(newRadius, newRadius); // recentrer à chaque fois
+
+        // Rendre le cercle plus transparent
+        sf::Color color = it->shape.getFillColor();
+        color.a = static_cast<sf::Uint8>(100 * ratio); // 100 à 0 alpha
+        it->shape.setFillColor(color);
+
+        ++it;
+    }
+}
+
+}
+
+
+
 void Boat::update(float throttle, float steering, float dt) {
     constexpr double rho = 1026.0;
     double RPM = throttle * 10000.0;
@@ -26,17 +75,36 @@ void Boat::update(float throttle, float steering, float dt) {
     total.z = (damping.z + actuators.z) * 4.0;
 
     mBody->addForce(total);
+
+    updateTrail(dt); // ➔ Nouveau
 }
+
 
 void Boat::draw(sf::RenderWindow& window) const {
     auto& state = mBody->getState();
-    sf::RectangleShape shape(sf::Vector2f(60.f, 30.f));
-    shape.setOrigin(30.f, 15.f);
-    shape.setPosition(state.position.x, state.position.y);
-    shape.setRotation(state.yaw * 180.f / 3.14159f);
-    shape.setFillColor(mColor);
-    window.draw(shape);
+    for (const auto& trail : mTrail) {
+    window.draw(trail.shape);
 }
+
+    sf::ConvexShape boat;
+    boat.setPointCount(5);
+
+    // Définir les points du bateau (plus long et fin)
+    boat.setPoint(0, sf::Vector2f(60.f, 15.f)); // Pointe avant (droite au milieu)
+    boat.setPoint(1, sf::Vector2f(45.f, 0.f));  // Coin haut
+    boat.setPoint(2, sf::Vector2f(0.f, 0.f));   // Coin arrière haut
+    boat.setPoint(3, sf::Vector2f(0.f, 30.f));  // Coin arrière bas
+    boat.setPoint(4, sf::Vector2f(45.f, 30.f)); // Coin bas
+
+    boat.setOrigin(30.f, 15.f); // Centre bien au milieu
+    boat.setPosition(state.position.x, state.position.y);
+    boat.setRotation(state.yaw * 180.f / 3.14159f);
+    boat.setFillColor(mColor);
+
+    window.draw(boat);
+}
+
+
 
 void Boat::setPosition(float x, float y) {
     mBody->setPosition(x, y);

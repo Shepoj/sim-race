@@ -82,12 +82,17 @@ void Game::startGame(int playerCount) {
         mObstacles.emplace_back();
     }
 
+    // Créer bateau 1 (joueur rouge)
     mBoat1 = new Boat(mEngine, mModel, sf::Color::Red);
+    mBoat1->setPosition(50.f, 360.f); // tout à gauche, milieu
+
     if (mPlayerCount == 2) {
+        // Créer bateau 2 (joueur bleu)
         mBoat2 = new Boat(mEngine, mModel, sf::Color::Blue);
-        mBoat2->setPosition(400.0, 400.0);
+        mBoat2->setPosition(50.f, 420.f); // légèrement décalé en bas pour ne pas se chevaucher
     }
 }
+
 
 void Game::update(float dt) {
     if (mBoat1) mBoat1->update(mThrottle1, mSteering1, dt);
@@ -101,7 +106,7 @@ void Game::update(float dt) {
         for (const auto& obstacle : obstacles) {
             sf::Vector2f obsPos = obstacle.getPosition();
             float radius = obstacle.getRadius(); // On doit ajouter cette méthode dans Obstacle.h
-            float minDist = radius + 30.f; // 30 = moitié longueur du bateau
+            float minDist = radius + 20.f; // 30 = moitié longueur du bateau
 
             float dx = boatPos.x - obsPos.x;
             float dy = boatPos.y - obsPos.y;
@@ -162,6 +167,19 @@ void Game::render() {
         text.setFillColor(sf::Color::Black);
         mWindow.draw(text);
     }
+
+    // Afficher le chronomètre en haut
+sf::Text chrono;
+chrono.setFont(mFont);
+chrono.setCharacterSize(24);
+chrono.setFillColor(sf::Color::Black);
+chrono.setPosition(20.f, 20.f);
+
+// Mettre à jour le texte du chrono
+chrono.setString("Temps : " + std::to_string(mElapsedTime).substr(0,5) + "s");
+
+mWindow.draw(chrono);
+
 
     mWindow.display();
 }

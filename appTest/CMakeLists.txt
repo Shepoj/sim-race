@@ -22,7 +22,7 @@ add_executable(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${SRC_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
-    /home/austin/Documents/POO/projet/support/RoyerOK/libphysics/include
+    /home/austin/Documents/POO/projet_git/sim-race/libphysics/include
 )
 
 target_link_libraries(${PROJECT_NAME}

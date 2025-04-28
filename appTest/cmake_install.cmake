@@ -1,8 +1,8 @@
-# Install script for directory: /home/austin/Documents/POO/projet/support/RoyerOK/appTest
+# Install script for directory: /home/austin/Documents/POO/projet_git/sim-race/appTest
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/austin/Documents/POO/projet/support/RoyerOK/SFML/install")
+  set(CMAKE_INSTALL_PREFIX "/home/austin/Documents/POO/projet_git/sim-race/libphysics")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -57,12 +57,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/bin" TYPE EXECUTABLE FILES "/home/austin/Documents/POO/projet/support/RoyerOK/appTest/apptest")
+  file(INSTALL DESTINATION "/bin" TYPE EXECUTABLE FILES "/home/austin/Documents/POO/projet_git/sim-race/appTest/apptest")
   if(EXISTS "$ENV{DESTDIR}/bin/apptest" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/bin/apptest")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}/bin/apptest"
-         OLD_RPATH "/home/austin/Documents/POO/projet/support/RoyerOK/libphysics/Debug:"
+         OLD_RPATH "/home/austin/Documents/POO/projet_git/sim-race/libphysics/Debug:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/bin/apptest")
@@ -74,10 +74,10 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   file(GET_RUNTIME_DEPENDENCIES
     RESOLVED_DEPENDENCIES_VAR _CMAKE_DEPS
     EXECUTABLES
-      "/home/austin/Documents/POO/projet/support/RoyerOK/appTest/apptest"
+      "/home/austin/Documents/POO/projet_git/sim-race/appTest/apptest"
     DIRECTORIES
       "/usr/lib/x86_64-linux-gnu"
-      "/home/austin/Documents/POO/projet/support/RoyerOK/libphysics/Debug"
+      "/home/austin/Documents/POO/projet_git/sim-race/libphysics/Debug"
     )
 endif()
 
@@ -101,7 +101,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "" TYPE PROGRAM FILES "/home/austin/Documents/POO/projet/support/RoyerOK/appTest/run.sh")
+  file(INSTALL DESTINATION "" TYPE PROGRAM FILES "/home/austin/Documents/POO/projet_git/sim-race/appTest/run.sh")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -112,5 +112,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/austin/Documents/POO/projet/support/RoyerOK/appTest/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/austin/Documents/POO/projet_git/sim-race/appTest/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DNOMINMAX
 
-CXX_INCLUDES = -I/home/austin/Documents/POO/projet/support/RoyerOK/appTest/src -I/home/austin/Documents/POO/projet/support/RoyerOK/appTest -isystem /home/austin/Documents/POO/projet/support/RoyerOK/libphysics/include
+CXX_INCLUDES = -I/home/austin/Documents/POO/projet_git/sim-race/appTest/src -I/home/austin/Documents/POO/projet_git/sim-race/appTest -isystem /home/austin/Documents/POO/projet_git/sim-race/libphysics/include
 
 CXX_FLAGS = -std=gnu++17
 
