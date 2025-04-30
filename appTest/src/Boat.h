@@ -5,6 +5,8 @@
 #include <physics/dynamicModel.h>
 #include <cmath>
 #include <list>
+#include <algorithm>
+#include <iostream>
 
 struct Trail {
     sf::CircleShape shape;
@@ -25,6 +27,8 @@ public:
     sf::Vector2f getPosition() const;
     void setFishCount(int count);
     void flash(const sf::Color& color); // on passe la couleur du flash
+    void clampToWindow(float width, float height);
+
 
 private:
     sim::physics::RigidBody* mBody;

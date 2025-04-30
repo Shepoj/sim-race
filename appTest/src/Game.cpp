@@ -13,7 +13,7 @@ Game::Game()
       mBoat2(nullptr),
       mThrottle1(0.f), mSteering1(0.f),
       mThrottle2(0.f), mSteering2(0.f),
-      mGameTime(0.f), mMaxGameTime(60.f)
+      mGameTime(0.f), mMaxGameTime(10.f)
 {
     if (!mFont.loadFromFile("CalSans-Regular.ttf")) {
         std::cerr << "Erreur chargement police CalSans-Regular.ttf" << std::endl;
@@ -120,6 +120,9 @@ void Game::startGame(int playerCount) {
 void Game::update(float dt) {
     if (mBoat1) mBoat1->update(mThrottle1, mSteering1, dt);
     if (mPlayerCount == 2 && mBoat2) mBoat2->update(mThrottle2, mSteering2, dt);
+    if (mBoat1) mBoat1->clampToWindow(1280.f, 720.f);
+    if (mPlayerCount == 2 && mBoat2) mBoat2->clampToWindow(1280.f, 720.f);
+
 
     auto checkCollision = [](Boat* boat, const std::vector<Obstacle>& obstacles) {
         sf::Vector2f boatPos = boat->getPosition();
@@ -265,7 +268,7 @@ void Game::render() {
             } else {
                 int s1 = mPort1->getScore();
                 int s2 = mPort2->getScore();
-                std::string winner = (s1 > s2) ? "  Vert gagne !" : (s1 < s2) ? "Rouge gagne !" : "Egalite !";
+                std::string winner = (s1 > s2) ? "      Vert gagne !" : (s1 < s2) ? "     Rouge gagne !" : "            Egalite !";
                 text.setString("Vert : " + std::to_string(s1) + "  -   Rouge : " + std::to_string(s2) + "\n" + winner);
             }
             sf::FloatRect bounds = text.getLocalBounds();

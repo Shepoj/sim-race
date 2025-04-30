@@ -150,3 +150,13 @@ void Boat::flash(const sf::Color& color) {
 void Boat::setRotation(float angleRad) {
     mBody->setRotation(angleRad);
 }
+
+void Boat::clampToWindow(float width, float height) {
+    auto& pos = mBody->getState().position;
+
+    float clampedX = std::clamp(static_cast<float>(pos.x), 0.f, width);
+    float clampedY = std::clamp(static_cast<float>(pos.y), 0.f, height);
+
+    mBody->setPosition(clampedX, clampedY);
+}
+
