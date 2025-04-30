@@ -25,7 +25,7 @@ Game::Game()
     mTimerText.setFont(mFont);
     mTimerText.setCharacterSize(28);
     mTimerText.setFillColor(sf::Color::Black);
-    mTimerText.setPosition(540.f, 20.f);
+    mTimerText.setPosition(560.f, 20.f);
 
     mFinishLine.setSize(sf::Vector2f(10.f, 200.f));
     mFinishLine.setFillColor(sf::Color::Green);
@@ -74,8 +74,8 @@ void Game::processEvents() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) mSteering1 = -1.0f;
 
         if (mPlayerCount == 2) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) mThrottle2 = 1.0f;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) mSteering2 = 1.0f;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) mThrottle2 = 1.0f;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) mSteering2 = 1.0f;
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) mSteering2 = -1.0f;
         }
     }
@@ -94,19 +94,20 @@ void Game::startGame(int playerCount) {
         mObstacles.emplace_back();
     }
 
-    mBoat1 = new Boat(mEngine, mModel, sf::Color::Red);
+    mBoat1 = new Boat(mEngine, mModel, sf::Color(60, 180, 75));
     mBoat1->setPosition(50.f, 360.f);
     mFishCarried1 = 0;
 
     if (mPlayerCount == 2) {
-        mBoat2 = new Boat(mEngine, mModel, sf::Color::Blue);
-        mBoat2->setPosition(850.f, 420.f);
+        mBoat2 = new Boat(mEngine, mModel, sf::Color(200, 60, 60));
+        mBoat2->setPosition(1230.f, 360.f);
+        mBoat2->setRotation(3.14159f); // vers la gauche
         mFishCarried2 = 0;
     }
 
-    mPort1 = new Port(sf::Vector2f(50.f, 360.f), sf::Color::Red, mFont);
+    mPort1 = new Port(sf::Vector2f(50.f, 360.f), sf::Color(60, 180, 75), mFont);
     if (mPlayerCount == 2)
-        mPort2 = new Port(sf::Vector2f(1230.f, 360.f), sf::Color::Blue, mFont);
+        mPort2 = new Port(sf::Vector2f(1230.f, 360.f), sf::Color(200, 60, 60), mFont);
 
     mFishSpawnTimer = 0.f;
     mFishSpawnInterval = 2.0f; // toutes les 2 secondes on peut essayer de faire apparaître un poisson
@@ -221,7 +222,8 @@ void Game::update(float dt) {
 }
 
 void Game::render() {
-    mWindow.clear(sf::Color::Cyan);
+    mWindow.clear(sf::Color(40, 120, 200)); // Bleu acier
+
 
     if (mState == GameState::Menu) {
         mMenu.draw(mWindow, mFont);
@@ -243,20 +245,45 @@ void Game::render() {
         mWindow.draw(mTimerText);
 
         if (mState == GameState::GameOver) {
+            sf::Text title;
+            title.setFont(mFont);
+            title.setCharacterSize(40);
+            title.setFillColor(sf::Color::Black);
+            title.setString("FIN DE LA PARTIE");
+
+            sf::FloatRect titleBounds = title.getLocalBounds();
+            title.setOrigin(titleBounds.width / 2.f, titleBounds.height / 2.f);
+            title.setPosition(640.f, 200.f); // centré en haut
+            mWindow.draw(title);
+
             sf::Text text;
             text.setFont(mFont);
             text.setCharacterSize(30);
             text.setFillColor(sf::Color::Black);
             if (mPlayerCount == 1) {
-                text.setString("Poissons attrape : " + std::to_string(mPort1->getScore()));
+                text.setString("Poissons attrapes : " + std::to_string(mPort1->getScore()));
             } else {
                 int s1 = mPort1->getScore();
                 int s2 = mPort2->getScore();
-                std::string winner = (s1 > s2) ? "Joueur 1 gagne !" : (s1 < s2) ? "Joueur 2 gagne !" : "Egalite !";
-                text.setString("J1 : " + std::to_string(s1) + " - J2 : " + std::to_string(s2) + "\n" + winner);
+                std::string winner = (s1 > s2) ? "  Vert gagne !" : (s1 < s2) ? "Rouge gagne !" : "Egalite !";
+                text.setString("Vert : " + std::to_string(s1) + "  -   Rouge : " + std::to_string(s2) + "\n" + winner);
             }
-            text.setPosition(300.f, 300.f);
+            sf::FloatRect bounds = text.getLocalBounds();
+            text.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+            text.setPosition(640.f, 300.f); // centré en X (fenêtre 1280x720)
+
             mWindow.draw(text);
+            sf::Text prompt;
+            prompt.setFont(mFont);
+            prompt.setCharacterSize(22);
+            prompt.setFillColor(sf::Color::Black);
+            prompt.setString("Appuyez sur ENTREE pour revenir au menu");
+
+            sf::FloatRect pb = prompt.getLocalBounds();
+            prompt.setOrigin(pb.width / 2.f, pb.height / 2.f);
+            prompt.setPosition(640.f, 400.f);
+            mWindow.draw(prompt);
+
         }
     }
 

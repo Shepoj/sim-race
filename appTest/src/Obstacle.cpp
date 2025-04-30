@@ -10,7 +10,7 @@ Obstacle::Obstacle() {
 
     float radius = distR(gen);
     mShape.setRadius(radius);
-    mShape.setFillColor(sf::Color::Blue);
+    mShape.setFillColor(sf::Color(194, 178, 128)); // Couleur sable
     mShape.setOrigin(radius, radius);
     mShape.setPosition(distX(gen), distY(gen));
 }

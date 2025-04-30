@@ -21,6 +21,7 @@ public:
     void update(float throttle, float steering, float dt);
     void draw(sf::RenderWindow& window, const sf::Font& font) const;
     void setPosition(float x, float y);
+    void setRotation(float angleRad);
     sf::Vector2f getPosition() const;
     void setFishCount(int count);
     void flash(const sf::Color& color); // on passe la couleur du flash

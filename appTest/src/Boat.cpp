@@ -24,8 +24,8 @@ void Boat::updateTrail(float dt) {
 
         newTrail.shape.setPosition(pos.x + decalage.x, pos.y + decalage.y);
 
-        newTrail.lifetime = 0.3f;     // Durée actuelle
-        newTrail.maxLifetime = 0.3f;  // Durée totale au départ
+        newTrail.lifetime = 0.2f;     // Durée actuelle
+        newTrail.maxLifetime = 0.2f;  // Durée totale au départ
         mTrail.push_back(newTrail);
 
     }
@@ -145,4 +145,8 @@ void Boat::setFishCount(int count) {
 void Boat::flash(const sf::Color& color) {
     mFlashTimer = 0.2f;
     mFlashColor = color;
+}
+
+void Boat::setRotation(float angleRad) {
+    mBody->setRotation(angleRad);
 }
