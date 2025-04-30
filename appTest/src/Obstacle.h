@@ -8,6 +8,8 @@ public:
     void draw(sf::RenderWindow& window) const;
     sf::Vector2f getPosition() const;
     float getRadius() const;
+    sf::FloatRect getGlobalBounds() const;
+
 
 
 private:

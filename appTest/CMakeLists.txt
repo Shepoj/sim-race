@@ -17,6 +17,8 @@ add_executable(${PROJECT_NAME}
     ${SRC_DIR}/Boat.cpp
     ${SRC_DIR}/Menu.cpp
     ${SRC_DIR}/Obstacle.cpp
+    ${SRC_DIR}/Fish.cpp
+    ${SRC_DIR}/Port.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

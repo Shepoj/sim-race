@@ -5,6 +5,8 @@
 #include "Boat.h"
 #include "Obstacle.h"
 #include "Menu.h"
+#include "Fish.h"
+#include "Port.h"
 #include <physics/physicsEngine.h>
 #include <physics/dynamicModel.h>
 
@@ -46,4 +48,25 @@ private:
 
     float mThrottle1, mSteering1;
     float mThrottle2, mSteering2;
+
+    bool mBoatsWereTouching;
+
+    // === Nouveau mode de jeu ===
+    std::vector<Fish> mFishes;
+
+    Port* mPort1;
+    Port* mPort2;
+
+    int mFishCarried1;
+    int mFishCarried2;
+
+    float mGameTime;
+    float mMaxGameTime;
+    sf::Text mTimerText;
+
+    sf::Texture mFishTexture;
+    float mFishSpawnTimer;
+    float mFishSpawnInterval;
+    int mMaxFishOnScreen;
+
 };

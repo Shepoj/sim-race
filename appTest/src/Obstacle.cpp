@@ -26,3 +26,7 @@ sf::Vector2f Obstacle::getPosition() const {
 float Obstacle::getRadius() const {
     return mShape.getRadius();
 }
+
+sf::FloatRect Obstacle::getGlobalBounds() const {
+    return mShape.getGlobalBounds(); // si tu utilises un sf::CircleShape mShape
+}

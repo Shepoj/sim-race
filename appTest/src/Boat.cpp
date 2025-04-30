@@ -4,6 +4,8 @@ Boat::Boat(sim::physics::PhysicsEngine& engine, sim::physics::DynamicModel& mode
     : mModel(model), mColor(color)
 {
     mBody = engine.createGenericBoat();
+    mFishCount = 0;
+
 }
 
 void Boat::updateTrail(float dt) {
@@ -77,10 +79,14 @@ void Boat::update(float throttle, float steering, float dt) {
     mBody->addForce(total);
 
     updateTrail(dt); // ➔ Nouveau
+    if (mFlashTimer > 0.f) {
+        mFlashTimer -= dt;
+    }
+
 }
 
 
-void Boat::draw(sf::RenderWindow& window) const {
+void Boat::draw(sf::RenderWindow& window, const sf::Font& font) const {
     auto& state = mBody->getState();
     for (const auto& trail : mTrail) {
     window.draw(trail.shape);
@@ -100,8 +106,24 @@ void Boat::draw(sf::RenderWindow& window) const {
     boat.setPosition(state.position.x, state.position.y);
     boat.setRotation(state.yaw * 180.f / 3.14159f);
     boat.setFillColor(mColor);
+    sf::Color drawColor = (mFlashTimer > 0.f) ? mFlashColor : mColor;
+    boat.setFillColor(drawColor);
 
     window.draw(boat);
+
+    sf::Text fishText;
+    fishText.setFont(font);
+    fishText.setCharacterSize(14);
+    fishText.setFillColor(sf::Color::Black);
+    fishText.setString(std::to_string(mFishCount));
+
+    sf::FloatRect bounds = fishText.getLocalBounds();
+    fishText.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    fishText.setPosition(state.position.x, state.position.y);
+
+    window.draw(fishText);
+
+
 }
 
 
@@ -112,5 +134,15 @@ void Boat::setPosition(float x, float y) {
 
 sf::Vector2f Boat::getPosition() const {
     const auto& state = mBody->getState();
-    return { state.position.x, state.position.y };
+    return sf::Vector2f(static_cast<float>(state.position.x), static_cast<float>(state.position.y));
+
+}
+
+void Boat::setFishCount(int count) {
+    mFishCount = count;
+}
+
+void Boat::flash(const sf::Color& color) {
+    mFlashTimer = 0.2f;
+    mFlashColor = color;
 }
