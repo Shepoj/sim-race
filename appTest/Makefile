@@ -198,6 +198,30 @@ src/Boat.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Boat.cpp.s
 .PHONY : src/Boat.cpp.s
 
+src/Fish.o: src/Fish.cpp.o
+.PHONY : src/Fish.o
+
+# target to build an object file
+src/Fish.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Fish.cpp.o
+.PHONY : src/Fish.cpp.o
+
+src/Fish.i: src/Fish.cpp.i
+.PHONY : src/Fish.i
+
+# target to preprocess a source file
+src/Fish.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Fish.cpp.i
+.PHONY : src/Fish.cpp.i
+
+src/Fish.s: src/Fish.cpp.s
+.PHONY : src/Fish.s
+
+# target to generate assembly for a file
+src/Fish.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Fish.cpp.s
+.PHONY : src/Fish.cpp.s
+
 src/Game.o: src/Game.cpp.o
 .PHONY : src/Game.o
 
@@ -270,6 +294,30 @@ src/Obstacle.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Obstacle.cpp.s
 .PHONY : src/Obstacle.cpp.s
 
+src/Port.o: src/Port.cpp.o
+.PHONY : src/Port.o
+
+# target to build an object file
+src/Port.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Port.cpp.o
+.PHONY : src/Port.cpp.o
+
+src/Port.i: src/Port.cpp.i
+.PHONY : src/Port.i
+
+# target to preprocess a source file
+src/Port.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Port.cpp.i
+.PHONY : src/Port.cpp.i
+
+src/Port.s: src/Port.cpp.s
+.PHONY : src/Port.s
+
+# target to generate assembly for a file
+src/Port.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/apptest.dir/build.make CMakeFiles/apptest.dir/src/Port.cpp.s
+.PHONY : src/Port.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -310,6 +358,9 @@ help:
 	@echo "... src/Boat.o"
 	@echo "... src/Boat.i"
 	@echo "... src/Boat.s"
+	@echo "... src/Fish.o"
+	@echo "... src/Fish.i"
+	@echo "... src/Fish.s"
 	@echo "... src/Game.o"
 	@echo "... src/Game.i"
 	@echo "... src/Game.s"
@@ -319,6 +370,9 @@ help:
 	@echo "... src/Obstacle.o"
 	@echo "... src/Obstacle.i"
 	@echo "... src/Obstacle.s"
+	@echo "... src/Port.o"
+	@echo "... src/Port.i"
+	@echo "... src/Port.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
