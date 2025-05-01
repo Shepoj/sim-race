@@ -1,40 +1,44 @@
 #include "Port.h"
 #include <string>
 
-Port::Port(const sf::Vector2f& position, const sf::Color& color, const sf::Font& font)
-    : mScore(0)
+/// Constructeur du port : initialise sa forme, sa couleur, sa position et son texte
+Port::Port(const sf::Vector2f& position, const sf::Color& couleur, const sf::Font& police)
+    : score(0)
 {
-    mShape.setSize(sf::Vector2f(40.f, 120.f));
-    mShape.setOrigin(20.f, 60.f);
-    mShape.setPosition(position);
-    mShape.setFillColor(color);
+    forme.setSize(sf::Vector2f(40.f, 120.f));         // Taille du port
+    forme.setOrigin(20.f, 60.f);                      // Origine centrée
+    forme.setPosition(position);                      // Position fournie
+    forme.setFillColor(couleur);                      // Couleur du port
 
-    mScoreText.setFont(font);
-    mScoreText.setCharacterSize(20);
-    mScoreText.setFillColor(sf::Color::Black);
-    sf::FloatRect textBounds = mScoreText.getLocalBounds();
-    mScoreText.setOrigin(textBounds.width / 2.f, textBounds.height / 2.f);
+    texteScore.setFont(police);                       // Police pour le score
+    texteScore.setCharacterSize(20);                  // Taille de caractère
+    texteScore.setFillColor(sf::Color::Black);        // Couleur du texte
 
-// Position centrale du port
-mScoreText.setPosition(position.x- 6.f, position.y - 10.f); 
-    mScoreText.setString("0");
+    // Centrage approximatif du texte par rapport à la forme
+    sf::FloatRect limitesTexte = texteScore.getLocalBounds();
+    texteScore.setOrigin(limitesTexte.width / 2.f, limitesTexte.height / 2.f);
+    texteScore.setPosition(position.x - 6.f, position.y - 10.f);
+    texteScore.setString("0");
 }
 
-void Port::draw(sf::RenderWindow& window) const {
-    window.draw(mShape);
-    window.draw(mScoreText);
-
+/// Affiche le port et le score sur la fenêtre
+void Port::draw(sf::RenderWindow& fenetre) const {
+    fenetre.draw(forme);
+    fenetre.draw(texteScore);
 }
 
+/// Retourne la zone de collision du port (utilisée pour détecter les livraisons)
 sf::FloatRect Port::getBounds() const {
-    return mShape.getGlobalBounds();
+    return forme.getGlobalBounds();
 }
 
+/// Incrémente le score quand un poisson est livré, et met à jour l'affichage
 void Port::depositFish() {
-    ++mScore;
-    mScoreText.setString(std::to_string(mScore));
+    ++score;
+    texteScore.setString(std::to_string(score));
 }
 
+/// Retourne le score actuel
 int Port::getScore() const {
-    return mScore;
+    return score;
 }

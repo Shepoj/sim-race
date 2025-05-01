@@ -4,42 +4,42 @@
 #include <algorithm>
 
 Game::Game()
-    : mWindow(sf::VideoMode(1280, 720), "Course de Bateaux !"),
-      mState(GameState::Menu),
-      mPlayerCount(1),
-      mWinner(0),
-      mElapsedTime(0.0f),
-      mBoat1(nullptr),
-      mBoat2(nullptr),
-      mThrottle1(0.f), mSteering1(0.f),
-      mThrottle2(0.f), mSteering2(0.f),
-      mGameTime(0.f), mMaxGameTime(10.f)
-{
-    if (!mFont.loadFromFile("CalSans-Regular.ttf")) {
+    : fenetre(sf::VideoMode(1280, 720), "Course de Bateaux !"),
+      etat(GameState::Menu),
+      nombreJoueurs(1),
+      gagnant(0),
+      tempsEcoule(0.0f),
+      bateau1(nullptr),
+      bateau2(nullptr),
+      acceleration1(0.f), rotation1(0.f),
+      acceleration2(0.f), rotation2(0.f),
+      tempsPartie(0.f), dureeMaxPartie(60.f) {
+
+    if (!police.loadFromFile("CalSans-Regular.ttf")) {
         std::cerr << "Erreur chargement police CalSans-Regular.ttf" << std::endl;
     }
-    if (!mFishTexture.loadFromFile("fish.png")) {
+    if (!texturePoisson.loadFromFile("fish.png")) {
         std::cerr << "Erreur chargement fish.png" << std::endl;
     }
 
-    mTimerText.setFont(mFont);
-    mTimerText.setCharacterSize(28);
-    mTimerText.setFillColor(sf::Color::Black);
-    mTimerText.setPosition(560.f, 20.f);
+    texteChrono.setFont(police);
+    texteChrono.setCharacterSize(28);
+    texteChrono.setFillColor(sf::Color::Black);
+    texteChrono.setPosition(560.f, 20.f);
 
-    mFinishLine.setSize(sf::Vector2f(10.f, 200.f));
-    mFinishLine.setFillColor(sf::Color::Green);
-    mFinishLine.setOrigin(5.f, 100.f);
-    mFinishLine.setPosition(1180.f, 360.f);
+    ligneArrivee.setSize(sf::Vector2f(10.f, 200.f));
+    ligneArrivee.setFillColor(sf::Color::Green);
+    ligneArrivee.setOrigin(5.f, 100.f);
+    ligneArrivee.setPosition(1180.f, 360.f);
 }
 
 void Game::run() {
-    while (mWindow.isOpen()) {
-        float dt = mClock.restart().asSeconds();
+    while (fenetre.isOpen()) {
+        float dt = horloge.restart().asSeconds();
         processEvents();
-        if (mState == GameState::Playing) {
+        if (etat == GameState::Playing) {
             update(dt);
-            mElapsedTime += dt;
+            tempsEcoule += dt;
         }
         render();
     }
@@ -47,11 +47,11 @@ void Game::run() {
 
 void Game::processEvents() {
     sf::Event event;
-    while (mWindow.pollEvent(event)) {
+    while (fenetre.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
-            mWindow.close();
+            fenetre.close();
 
-        if (mState == GameState::Menu) {
+        if (etat == GameState::Menu) {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Num1) {
                     startGame(1);
@@ -59,236 +59,230 @@ void Game::processEvents() {
                     startGame(2);
                 }
             }
-        } else if (mState == GameState::GameOver) {
+        } else if (etat == GameState::GameOver) {
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
-                mState = GameState::Menu;
+                etat = GameState::Menu;
             }
         }
     }
 
-    if (mState == GameState::Playing) {
-        mThrottle1 = mSteering1 = mThrottle2 = mSteering2 = 0.0f;
+    if (etat == GameState::Playing) {
+        acceleration1 = rotation1 = acceleration2 = rotation2 = 0.0f;
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) mThrottle1 = 1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) mSteering1 = 1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) mSteering1 = -1.0f;
+        // Commandes joueur 1 (flèches)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) acceleration1 = 1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) rotation1 = 1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) rotation1 = -1.0f;
 
-        if (mPlayerCount == 2) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) mThrottle2 = 1.0f;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) mSteering2 = 1.0f;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) mSteering2 = -1.0f;
+        // Commandes joueur 2 (ZQSD)
+        if (nombreJoueurs == 2) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) acceleration2 = 1.0f;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) rotation2 = 1.0f;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) rotation2 = -1.0f;
         }
     }
 }
 
-void Game::startGame(int playerCount) {
-    mPlayerCount = playerCount;
-    mState = GameState::Playing;
-    mWinner = 0;
-    mElapsedTime = 0.0f;
-    mGameTime = 0.0f;
-    mBoatsWereTouching = false;
+void Game::startGame(int nbJoueurs) {
+    nombreJoueurs = nbJoueurs;
+    etat = GameState::Playing;
+    gagnant = 0;
+    tempsEcoule = 0.0f;
+    tempsPartie = 0.0f;
+    bateauxSeTouchaient = false;
 
-    mObstacles.clear();
-    for (int i = 0; i < 10; ++i) {
-        mObstacles.emplace_back();
+    // Réinitialisation du terrain
+    obstacles.clear();
+    for (int i = 0; i < 10; ++i)
+        obstacles.emplace_back();
+
+    // Création du bateau du joueur 1
+    bateau1 = new Boat(moteurPhysique, modelePhysique, sf::Color(60, 180, 75));
+    bateau1->setPosition(50.f, 360.f);
+    poissonsTransportes1 = 0;
+
+    // Création du bateau du joueur 2 si nécessaire
+    if (nombreJoueurs == 2) {
+        bateau2 = new Boat(moteurPhysique, modelePhysique, sf::Color(200, 60, 60));
+        bateau2->setPosition(1230.f, 360.f);
+        bateau2->setRotation(3.14159f); // vers la gauche
+        poissonsTransportes2 = 0;
     }
 
-    mBoat1 = new Boat(mEngine, mModel, sf::Color(60, 180, 75));
-    mBoat1->setPosition(50.f, 360.f);
-    mFishCarried1 = 0;
+    // Ports
+    port1 = new Port(sf::Vector2f(50.f, 360.f), sf::Color(60, 180, 75), police);
+    if (nombreJoueurs == 2)
+        port2 = new Port(sf::Vector2f(1230.f, 360.f), sf::Color(200, 60, 60), police);
 
-    if (mPlayerCount == 2) {
-        mBoat2 = new Boat(mEngine, mModel, sf::Color(200, 60, 60));
-        mBoat2->setPosition(1230.f, 360.f);
-        mBoat2->setRotation(3.14159f); // vers la gauche
-        mFishCarried2 = 0;
-    }
-
-    mPort1 = new Port(sf::Vector2f(50.f, 360.f), sf::Color(60, 180, 75), mFont);
-    if (mPlayerCount == 2)
-        mPort2 = new Port(sf::Vector2f(1230.f, 360.f), sf::Color(200, 60, 60), mFont);
-
-    mFishSpawnTimer = 0.f;
-    mFishSpawnInterval = 2.0f; // toutes les 2 secondes on peut essayer de faire apparaître un poisson
-    mMaxFishOnScreen = 2;      // max 2 poissons visibles à la fois
-
-    mFishes.clear(); // ← ne plus créer 10 dès le début
-
+    // Poissons
+    poissons.clear();
+    timerApparitionPoisson = 0.f;
+    intervallePoisson = 2.0f;
+    maxPoissonsEcran = 2;
 }
 
 void Game::update(float dt) {
-    if (mBoat1) mBoat1->update(mThrottle1, mSteering1, dt);
-    if (mPlayerCount == 2 && mBoat2) mBoat2->update(mThrottle2, mSteering2, dt);
-    if (mBoat1) mBoat1->clampToWindow(1280.f, 720.f);
-    if (mPlayerCount == 2 && mBoat2) mBoat2->clampToWindow(1280.f, 720.f);
+    // Mise à jour des bateaux (mouvement et contraintes écran)
+    if (bateau1) {
+        bateau1->update(acceleration1, rotation1, dt);
+        bateau1->clampToWindow(1280.f, 720.f);
+    }
+    if (nombreJoueurs == 2 && bateau2) {
+        bateau2->update(acceleration2, rotation2, dt);
+        bateau2->clampToWindow(1280.f, 720.f);
+    }
 
-
-    auto checkCollision = [](Boat* boat, const std::vector<Obstacle>& obstacles) {
-        sf::Vector2f boatPos = boat->getPosition();
-        for (const auto& obstacle : obstacles) {
-            sf::Vector2f obsPos = obstacle.getPosition();
-            float radius = obstacle.getRadius();
-            float minDist = radius + 20.f;
-            float dx = boatPos.x - obsPos.x;
-            float dy = boatPos.y - obsPos.y;
-            float distance = std::sqrt(dx * dx + dy * dy);
-            if (distance < minDist && distance != 0.f) {
-                sf::Vector2f repelDir(dx / distance, dy / distance);
-                boat->setPosition(obsPos.x + repelDir.x * minDist, obsPos.y + repelDir.y * minDist);
+    // Gestion des collisions bateau <-> obstacle
+    auto checkCollision = [](Boat* b, const std::vector<Obstacle>& obs) {
+        sf::Vector2f posBateau = b->getPosition();
+        for (const auto& o : obs) {
+            sf::Vector2f posObs = o.getPosition();
+            float dist = std::hypot(posBateau.x - posObs.x, posBateau.y - posObs.y);
+            float rayonMin = o.getRadius() + 20.f; // 20 = demi-longueur bateau
+            if (dist < rayonMin && dist != 0.f) {
+                sf::Vector2f repulsion((posBateau.x - posObs.x) / dist, (posBateau.y - posObs.y) / dist);
+                b->setPosition(posObs.x + repulsion.x * rayonMin, posObs.y + repulsion.y * rayonMin);
             }
         }
     };
+    if (bateau1) checkCollision(bateau1, obstacles);
+    if (nombreJoueurs == 2 && bateau2) checkCollision(bateau2, obstacles);
 
-    if (mBoat1) checkCollision(mBoat1, mObstacles);
-    if (mPlayerCount == 2 && mBoat2) checkCollision(mBoat2, mObstacles);
+    // Simulation physique générale
+    moteurPhysique.step(dt);
 
-    mEngine.step(dt);
+    // Mise à jour du chrono restant
+    tempsPartie += dt;
+    float tempsRestant = std::max(0.f, dureeMaxPartie - tempsPartie);
+    texteChrono.setString("Temps : " + std::to_string(static_cast<int>(tempsRestant)) + "s");
 
-    mGameTime += dt;
-    float remaining = std::max(0.f, mMaxGameTime - mGameTime);
-    mTimerText.setString("Temps : " + std::to_string(static_cast<int>(remaining)) + "s");
-
-    // Ramasser poissons
-    auto tryCollect = [](Boat* boat, std::vector<Fish>& fishes, int& count) {
-        sf::Vector2f pos = boat->getPosition();
-        for (auto& fish : fishes) {
-            if (!fish.isCollected()) {
-                sf::Vector2f fpos = fish.getPosition();
-                float dist = std::hypot(pos.x - fpos.x, pos.y - fpos.y);
-                if (dist < 30.f) {
-                    fish.markCollected();
-                    ++count;
-                }
+    // Ramassage des poissons
+    auto ramassePoisson = [](Boat* b, std::vector<Fish>& liste, int& compteur) {
+        sf::Vector2f pos = b->getPosition();
+        for (auto& f : liste) {
+            if (!f.isCollected() && std::hypot(pos.x - f.getPosition().x, pos.y - f.getPosition().y) < 30.f) {
+                f.markCollected();
+                ++compteur;
             }
         }
     };
-    tryCollect(mBoat1, mFishes, mFishCarried1);
-    if (mPlayerCount == 2) tryCollect(mBoat2, mFishes, mFishCarried2);
+    if (bateau1) ramassePoisson(bateau1, poissons, poissonsTransportes1);
+    if (nombreJoueurs == 2 && bateau2) ramassePoisson(bateau2, poissons, poissonsTransportes2);
 
-    // Dépôt au port
-    if (mPort1->getBounds().contains(mBoat1->getPosition())) {
-        for (int i = 0; i < mFishCarried1; ++i) mPort1->depositFish();
-        mFishCarried1 = 0;
+    // Dépôt dans les ports
+    if (port1->getBounds().contains(bateau1->getPosition())) {
+        for (int i = 0; i < poissonsTransportes1; ++i) port1->depositFish();
+        poissonsTransportes1 = 0;
     }
-    if (mPlayerCount == 2 && mPort2->getBounds().contains(mBoat2->getPosition())) {
-        for (int i = 0; i < mFishCarried2; ++i) mPort2->depositFish();
-        mFishCarried2 = 0;
+    if (nombreJoueurs == 2 && port2->getBounds().contains(bateau2->getPosition())) {
+        for (int i = 0; i < poissonsTransportes2; ++i) port2->depositFish();
+        poissonsTransportes2 = 0;
     }
 
-    // Échange en cas de collision
-    if (mPlayerCount == 2) {
-        float dx = mBoat1->getPosition().x - mBoat2->getPosition().x;
-        float dy = mBoat1->getPosition().y - mBoat2->getPosition().y;
+    // Échange de poissons si les bateaux se touchent
+    if (nombreJoueurs == 2) {
+        float dx = bateau1->getPosition().x - bateau2->getPosition().x;
+        float dy = bateau1->getPosition().y - bateau2->getPosition().y;
         float dist = std::sqrt(dx * dx + dy * dy);
-        bool boatsTouchingNow = (dist < 40.f);
+        bool enContact = (dist < 40.f);
 
-        if (boatsTouchingNow && !mBoatsWereTouching) {
-            int before1 = mFishCarried1;
-            int before2 = mFishCarried2;
-            std::swap(mFishCarried1, mFishCarried2);
-
-            if (mFishCarried1 > before1) {
-                mBoat1->flash(sf::Color(255, 215, 0));
-            }
-            if (mFishCarried2 > before2) {
-                mBoat2->flash(sf::Color(255, 215, 0));
-            }
+        if (enContact && !bateauxSeTouchaient) {
+            int avant1 = poissonsTransportes1;
+            int avant2 = poissonsTransportes2;
+            std::swap(poissonsTransportes1, poissonsTransportes2);
+            if (poissonsTransportes1 > avant1) bateau1->flash(sf::Color(255, 215, 0));
+            if (poissonsTransportes2 > avant2) bateau2->flash(sf::Color(255, 215, 0));
         }
-        mBoatsWereTouching = boatsTouchingNow;
+        bateauxSeTouchaient = enContact;
     }
 
-
-    if (mGameTime >= mMaxGameTime) {
-        mState = GameState::GameOver;
+    // Fin du jeu si temps écoulé
+    if (tempsPartie >= dureeMaxPartie) {
+        etat = GameState::GameOver;
     }
 
-    // === GÉNÉRATION DYNAMIQUE DE POISSONS ===
-    mFishSpawnTimer += dt;
-
-    // Compter combien de poissons ne sont pas encore ramassés
-    int activeFish = std::count_if(mFishes.begin(), mFishes.end(), [](const Fish& f) {
+    // Apparition dynamique des poissons
+    timerApparitionPoisson += dt;
+    int nbActifs = std::count_if(poissons.begin(), poissons.end(), [](const Fish& f) {
         return !f.isCollected();
     });
+    if (timerApparitionPoisson >= intervallePoisson && nbActifs < maxPoissonsEcran) {
+        std::vector<sf::FloatRect> zonesAeviter;
+        zonesAeviter.push_back(ligneArrivee.getGlobalBounds());
+        for (const auto& o : obstacles) zonesAeviter.push_back(o.getGlobalBounds());
+        zonesAeviter.push_back(port1->getBounds());
+        if (nombreJoueurs == 2) zonesAeviter.push_back(port2->getBounds());
 
-    if (mFishSpawnTimer >= mFishSpawnInterval && activeFish < mMaxFishOnScreen) {
-        std::vector<sf::FloatRect> avoidZones;
-        avoidZones.push_back(mFinishLine.getGlobalBounds());
-        for (const auto& obs : mObstacles) avoidZones.push_back(obs.getGlobalBounds());
-        avoidZones.push_back(mPort1->getBounds());
-        if (mPlayerCount == 2) avoidZones.push_back(mPort2->getBounds());
-
-        mFishes.emplace_back(mFishTexture, avoidZones);
-        mFishSpawnTimer = 0.f;
+        poissons.emplace_back(texturePoisson, zonesAeviter);
+        timerApparitionPoisson = 0.f;
     }
-
 }
 
 void Game::render() {
-    mWindow.clear(sf::Color(40, 120, 200)); // Bleu acier
+    fenetre.clear(sf::Color(40, 120, 200)); // fond bleu
 
+    if (etat == GameState::Menu) {
+        menu.draw(fenetre, police);
 
-    if (mState == GameState::Menu) {
-        mMenu.draw(mWindow, mFont);
-    } else if (mState == GameState::Playing || mState == GameState::GameOver) {
-        for (const auto& obstacle : mObstacles) obstacle.draw(mWindow);
-        for (const auto& fish : mFishes) fish.draw(mWindow);
-        mPort1->draw(mWindow);
-        if (mPlayerCount == 2) mPort2->draw(mWindow);
-        if (mBoat1) {
-            mBoat1->setFishCount(mFishCarried1);
-            mBoat1->draw(mWindow, mFont);
+    } else if (etat == GameState::Playing || etat == GameState::GameOver) {
+        // Dessin des obstacles
+        for (const auto& obs : obstacles) obs.draw(fenetre);
 
+        // Dessin des poissons
+        for (const auto& fish : poissons) fish.draw(fenetre);
+
+        // Dessin des ports
+        if (port1) port1->draw(fenetre);
+        if (nombreJoueurs == 2 && port2) port2->draw(fenetre);
+
+        // Dessin des bateaux avec le nombre de poissons portés
+        if (bateau1) {
+            bateau1->setFishCount(poissonsTransportes1);
+            bateau1->draw(fenetre, police);
         }
-        if (mPlayerCount == 2 && mBoat2) {
-            mBoat2->setFishCount(mFishCarried2);
-            mBoat2->draw(mWindow, mFont);
-
+        if (nombreJoueurs == 2 && bateau2) {
+            bateau2->setFishCount(poissonsTransportes2);
+            bateau2->draw(fenetre, police);
         }
-        mWindow.draw(mTimerText);
 
-        if (mState == GameState::GameOver) {
-            sf::Text title;
-            title.setFont(mFont);
-            title.setCharacterSize(40);
-            title.setFillColor(sf::Color::Black);
-            title.setString("FIN DE LA PARTIE");
+        // Chronomètre en haut au centre
+        fenetre.draw(texteChrono);
 
-            sf::FloatRect titleBounds = title.getLocalBounds();
-            title.setOrigin(titleBounds.width / 2.f, titleBounds.height / 2.f);
-            title.setPosition(640.f, 200.f); // centré en haut
-            mWindow.draw(title);
+        // Affichage de l'écran de fin
+        if (etat == GameState::GameOver) {
+            sf::Text titre("FIN DE LA PARTIE", police, 40);
+            titre.setFillColor(sf::Color::Black);
+            sf::FloatRect tb = titre.getLocalBounds();
+            titre.setOrigin(tb.width / 2.f, tb.height / 2.f);
+            titre.setPosition(640.f, 200.f);
+            fenetre.draw(titre);
 
-            sf::Text text;
-            text.setFont(mFont);
-            text.setCharacterSize(30);
-            text.setFillColor(sf::Color::Black);
-            if (mPlayerCount == 1) {
-                text.setString("Poissons attrapes : " + std::to_string(mPort1->getScore()));
+            sf::Text resultat;
+            resultat.setFont(police);
+            resultat.setCharacterSize(30);
+            resultat.setFillColor(sf::Color::Black);
+
+            if (nombreJoueurs == 1) {
+                resultat.setString("Poissons attrapes : " + std::to_string(port1->getScore()));
             } else {
-                int s1 = mPort1->getScore();
-                int s2 = mPort2->getScore();
-                std::string winner = (s1 > s2) ? "      Vert gagne !" : (s1 < s2) ? "     Rouge gagne !" : "            Egalite !";
-                text.setString("Vert : " + std::to_string(s1) + "  -   Rouge : " + std::to_string(s2) + "\n" + winner);
+                int score1 = port1->getScore();
+                int score2 = port2->getScore();
+                std::string gagnantText = (score1 > score2) ? "      Vert gagne !" : (score2 > score1) ? "     Rouge gagne !" : "            Egalite !";
+                resultat.setString("Vert : " + std::to_string(score1) + "  -  Rouge : " + std::to_string(score2) + "\n" + gagnantText);
             }
-            sf::FloatRect bounds = text.getLocalBounds();
-            text.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
-            text.setPosition(640.f, 300.f); // centré en X (fenêtre 1280x720)
+            sf::FloatRect rb = resultat.getLocalBounds();
+            resultat.setOrigin(rb.width / 2.f, rb.height / 2.f);
+            resultat.setPosition(640.f, 300.f);
+            fenetre.draw(resultat);
 
-            mWindow.draw(text);
-            sf::Text prompt;
-            prompt.setFont(mFont);
-            prompt.setCharacterSize(22);
-            prompt.setFillColor(sf::Color::Black);
-            prompt.setString("Appuyez sur ENTREE pour revenir au menu");
-
-            sf::FloatRect pb = prompt.getLocalBounds();
-            prompt.setOrigin(pb.width / 2.f, pb.height / 2.f);
-            prompt.setPosition(640.f, 400.f);
-            mWindow.draw(prompt);
-
+            sf::Text instructions("Appuyez sur ENTREE pour revenir au menu", police, 22);
+            instructions.setFillColor(sf::Color::Black);
+            sf::FloatRect ib = instructions.getLocalBounds();
+            instructions.setOrigin(ib.width / 2.f, ib.height / 2.f);
+            instructions.setPosition(640.f, 400.f);
+            fenetre.draw(instructions);
         }
     }
 
-    mWindow.display();
+    fenetre.display();
 }
