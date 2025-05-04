@@ -13,8 +13,8 @@ Obstacle::Obstacle() {
 
     float rayon = distributionRayon(generateur);
     forme.setRadius(rayon);
-    forme.setFillColor(sf::Color(194, 178, 128)); // Couleur sable naturelle
-    forme.setOrigin(rayon, rayon);               // Origine centrée pour un positionnement naturel
+    forme.setFillColor(sf::Color(194, 178, 128)); // Couleur sable
+    forme.setOrigin(rayon, rayon);               // Origine centrée
     forme.setPosition(distributionX(generateur), distributionY(generateur));
 }
 
