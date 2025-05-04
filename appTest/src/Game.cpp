@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 
+// Constructeur de la classe Game
 Game::Game()
     : fenetre(sf::VideoMode(1280, 720), "Course de Bateaux !"),
       etat(GameState::Menu),
@@ -15,18 +16,23 @@ Game::Game()
       acceleration2(0.f), rotation2(0.f),
       tempsPartie(0.f), dureeMaxPartie(60.f) {
 
+    // Chargement de la police pour afficher les textes à l’écran
     if (!police.loadFromFile("CalSans-Regular.ttf")) {
         std::cerr << "Erreur chargement police CalSans-Regular.ttf" << std::endl;
     }
+
+    // Chargement de l’image de poisson
     if (!texturePoisson.loadFromFile("fish.png")) {
         std::cerr << "Erreur chargement fish.png" << std::endl;
     }
 
+    // Initialisation du texte du chronomètre en haut de l’écran
     texteChrono.setFont(police);
     texteChrono.setCharacterSize(28);
     texteChrono.setFillColor(sf::Color::Black);
     texteChrono.setPosition(560.f, 20.f);
 
+    // Définition de la ligne d’arrivée (c'etait pour l'ancien jeu)
     ligneArrivee.setSize(sf::Vector2f(10.f, 200.f));
     ligneArrivee.setFillColor(sf::Color::Green);
     ligneArrivee.setOrigin(5.f, 100.f);
@@ -34,23 +40,34 @@ Game::Game()
 }
 
 void Game::run() {
+    // Boucle principale du jeu : tourne tant que la fenêtre est ouverte
     while (fenetre.isOpen()) {
+        // Calcule le temps écoulé depuis la dernière image
         float dt = horloge.restart().asSeconds();
+        
+        // Gère les entrées clavier et les événements (fermeture, touches, etc.)
         processEvents();
+        
         if (etat == GameState::Playing) {
+            // Met à jour les positions, collisions, scores, poissons, etc
             update(dt);
+            
+            // Ajoute le temps écoulé à la durée totale de la partie
             tempsEcoule += dt;
         }
+        // Affiche le contenu à l’écran
         render();
     }
 }
 
 void Game::processEvents() {
     sf::Event event;
+    // Boucle qui traite tous les événements en attente
     while (fenetre.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             fenetre.close();
 
+        // Si on est dans le menu principal
         if (etat == GameState::Menu) {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Num1) {
@@ -59,13 +76,17 @@ void Game::processEvents() {
                     startGame(2);
                 }
             }
-        } else if (etat == GameState::GameOver) {
+        }
+            
+        // Si on est dans l'écran de fin de partie
+        else if (etat == GameState::GameOver) {
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
                 etat = GameState::Menu;
             }
         }
     }
 
+    // Si on est en train de jouer
     if (etat == GameState::Playing) {
         acceleration1 = rotation1 = acceleration2 = rotation2 = 0.0f;
 
